@@ -1,23 +1,26 @@
 module.exports = {
-  Name: "insert order",
+  Name: "bubble order",
   Init() {
     const data = Array.from({ length: 10000 }, (v, k) =>
-      Math.floor(Math.random() * 10000)
+      Math.floor(Math.random() * 1000)
     );
 
     return { data };
   },
   Exec(ctx) {
     const originData = ctx.data;
-    for (let i = 1; i < originData.length; ++i) {
-      for (let j = i; j >= 1; --j) {
-        if (originData[j] < originData[j - 1]) {
+    let isOrdered = true;
+    for (let i = 0; i < originData.length - 1; ++i) {
+      for (let j = 0; j < originData.length - 1 - i; ++j) {
+        if (originData[j] > originData[j + 1]) {
           let t = originData[j];
-          originData[j] = originData[j - 1];
-          originData[j - 1] = t;
-        } else {
-          break;
+          originData[j] = originData[j + 1];
+          originData[j + 1] = t;
+          isOrdered = false;
         }
+      }
+      if (isOrdered) {
+        break;
       }
     }
     return ctx;
