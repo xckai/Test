@@ -22,6 +22,7 @@ function sleep(ms) {
     const execs = examPkg.Execs;
     const check = examPkg.Check;
     const sampleAcc = examPkg.TestCaseAcc || 1;
+    const memoryInfos = [];
     let sampleCostRes = {};
     let ctx = initFn();
     function doExecutor() {
@@ -36,56 +37,30 @@ function sleep(ms) {
       progressBar.render({ completed: i + 1, total: sampleAcc });
       ctx = initFn();
       if (examPkg.Exec != null) {
+        ctx.Name = examPkg.Name;
         sampleCostRes[examPkg.Name] = sampleCostRes[examPkg.Name] == null ? [] : sampleCostRes[examPkg.Name];
         exec = examPkg.Exec;
         sampleCostRes[examPkg.Name].push(doExecutor());
       } else if (execs != null) {
         execs.forEach((instance) => {
+          ctx.Name = instance.Name;
           sampleCostRes[instance.Name] = sampleCostRes[instance.Name] == null ? [] : sampleCostRes[instance.Name];
           exec = instance.Exec;
           sampleCostRes[instance.Name].push(doExecutor());
         });
       }
+      memoryInfos.push(process.memoryUsage());
     }
     progressBar.clear();
     for (let name in sampleCostRes) {
       let res = sampleCostRes[name];
       console.log(`${name}平均耗时： ${res.reduce((p, c) => p + c) / res.length} ms, 稳定性标准差：${standardDeviation(res, true)} 共 ${sampleAcc}条测试`);
     }
-
-    // if (exec != null) {
-    //   sampleCostRes = [];
-    //   for (let i = 0; i < sampleAcc; ++i) {
-    //     doExecutor();
-    //   }
-    //   console.log(
-    //     `${examPkg.Name}平均耗时： ${
-    //       sampleCostRes.reduce((p, c) => p + c) / sampleCostRes.length
-    //     } ms, 稳定性标准差：${standardDeviation(
-    //       sampleCostRes,
-    //       true
-    //     )} 共 ${sampleAcc}条测试`
-    //   );
-    // }
-    // if (execs != null) {
-    //   execs.forEach(async (instance) => {
-    //     sampleCostRes = [];
-    //     exec = instance.Exec;
-    //     console.log(`${instance.Name} 开始 `);
-    //     for (let i = 0; i < sampleAcc; ++i) {
-    //       doExecutor();
-    //     }
-    //     console.log(
-    //       `${instance.Name}平均耗时： ${
-    //         sampleCostRes.reduce((p, c) => p + c) / sampleCostRes.length
-    //       } ms, 稳定性标准差：${standardDeviation(
-    //         sampleCostRes,
-    //         true
-    //       )} 共 ${sampleAcc}条测试`
-    //     );
-    //     await sleep(2000);
-    //   });
-    // }
+    console.log(
+      `平均内存占用： ${(memoryInfos.map((m) => m.heapTotal).reduce((p, c) => p + c) / memoryInfos.length / 1024 / 1024).toFixed(2)} MB  Heap,
+      ${(memoryInfos.map((m) => m.heapUsed).reduce((p, c) => p + c) / memoryInfos.length / 1024 / 1024).toFixed(2)} MB HeapUsed,
+      ${(memoryInfos.map((m) => m.rss).reduce((p, c) => p + c) / memoryInfos.length / 1024 / 1024).toFixed(2)} MB RSS, `
+    );
   } catch (err) {
     console.error(err);
   }
