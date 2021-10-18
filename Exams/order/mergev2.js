@@ -1,9 +1,9 @@
 module.exports = {
   Name: 'mergev2 order',
-  TestCaseAcc: 100,
+  TestCaseAcc: 1000,
 
   Init() {
-    const data = Array.from({ length: 1000000 }, (v, k) => Math.floor(Math.random() * 1000000));
+    const data = Array.from({ length: 100000 }, (v, k) => Math.floor(Math.random() * 155000));
 
     return { data };
   },
