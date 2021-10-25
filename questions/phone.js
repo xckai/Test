@@ -44,22 +44,34 @@ function ofStr(str){
 function allCompleted(queue){
   return queue.reduce((p,c)=>p && c.crtIdx ==  c.lettels.length -1, true);
 }
-function getLettles(str){
+function getLettles(str) {
+  if (!str) {
+    return []
+  }
   let queue  = ofStr(str);
-  let crtIdx =0;
-  // let allTick = queue.reduce((p,c)=>p &c.lettels.length, 1);
   let res =[]
   while(!allCompleted(queue)){
-    res.push(queue.map(q=>q.lettels[q.crtIdx]).join(""));
-    if(queue[crtIdx].crtIdx < queue[crtIdx].lettels.length -1){
-      queue[crtIdx].crtIdx++;
-    }else{
-      for(let i =1 ; i < queue.length; ++i ){
+    res.push(queue.map(q => q.lettels[q.crtIdx]).join(""));
+    for(let i =0 ; i < queue.length; ++i ){
         if(queue[i].crtIdx < queue[i].lettels.length -1){
           queue[i].crtIdx ++;
           break;
+        } else {
+          let j = i+1;
+          for (j; j < queue.length; ++j){
+            if (queue[j].crtIdx < queue[j].lettels.length -1) {
+              queue[j].crtIdx++;
+              break;
+            } 
+          }
+          if (j >= queue.length) {
+            break;
+          }
+          for (let t = 0; t < j; ++t){
+            queue[t].crtIdx = 0;
+          }
+          break;
         }
-      }
     }
   }
   res.push(queue.map(q=>q.lettels[q.crtIdx]).join(""));
