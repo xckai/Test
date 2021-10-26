@@ -62,7 +62,40 @@ function getLettles(str) {
             if (queue[j].crtIdx < queue[j].lettels.length -1) {
               queue[j].crtIdx++;
               break;
-            } 
+            }
+          }
+          if (j >= queue.length) {
+            break;
+          }
+          for (let t = 0; t < j; ++t){
+            queue[t].crtIdx = 0;
+          }
+          break;
+        }
+    }
+  }
+  res.push(queue.map(q=>q.lettels[q.crtIdx]).join(""));
+  return res;
+}
+function getLettlesv2(str) {
+  if (!str) {
+    return []
+  }
+  let queue  = ofStr(str);
+  let res =[]
+  while(!allCompleted(queue)){
+    res.push(queue.map(q => q.lettels[q.crtIdx]).join(""));
+    for(let i =0 ; i < queue.length; ++i ){
+        if(queue[i].crtIdx < queue[i].lettels.length -1){
+          queue[i].crtIdx ++;
+          break;
+        } else {
+          let j = i+1;
+          for (j; j < queue.length; ++j){
+            if (queue[j].crtIdx < queue[j].lettels.length -1) {
+              queue[j].crtIdx++;
+              break;
+            }
           }
           if (j >= queue.length) {
             break;
