@@ -86,7 +86,7 @@ namespace SignatureService
 
             await asyncCollector.AddAsync(new AuditLogItem()
             {
-                PartitionKey = reqDto.Tag ?? "SignSignature",
+                PartitionKey = "SignSignature",
                 RowKey = Guid.NewGuid().ToString("N"),
                 SignSignatureRequest = reqDto,
                 User=user,
