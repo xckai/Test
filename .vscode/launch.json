@@ -8,9 +8,13 @@
       "type": "pwa-node",
       "request": "launch",
       "name": "Launch Program",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}\\Exams\\executor.js",
-      "args": ["${file}"],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}\\sort\\executor.js",
+      "args": [
+        "${file}"
+      ],
       "console": "integratedTerminal"
     }
   ]
