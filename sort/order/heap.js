@@ -2,7 +2,7 @@ module.exports = {
   Name: 'heap order',
   TestCaseAcc: 1000,
   Init() {
-    const data = Array.from({ length: 5 }, (v, k) => Math.floor(Math.random() * 155000));
+    const data = Array.from({ length: 5 }, (v, k) => Math.floor(Math.random() * 1000));
 
     return { data };
   },
@@ -29,8 +29,8 @@ function heapSort(arr) {
   buildHeap(arr);
   for (let i = len - 1; i > 0; --i) {
     swap(arr, 0, i);
-    buildHeap(arr, 0);
     --len;
+    adjustHeap(arr, 0);
   }
 }
 function buildHeap(arr) {
