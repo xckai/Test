@@ -1,0 +1,187 @@
+{
+  "domNodes": [
+    {
+      "nodeType": 9,
+      "nodeName": "#document",
+      "nodeValue": "",
+      "backendNodeId": 2,
+      "childNodeIndexes": [1, 2],
+      "layoutNodeIndex": 0,
+      "documentURL": "http://localhost:8000/shadow.html",
+      "baseURL": "http://localhost:8000/shadow.html",
+      "documentEncoding": "UTF-8",
+      "frameId": "16E5EB33C68966D5558A668B91DB28A8",
+      "scrollOffsetX": 0,
+      "scrollOffsetY": 0
+    },
+    { "nodeType": 10, "nodeName": "html", "nodeValue": "", "backendNodeId": 4, "publicId": "", "systemId": "" },
+    {
+      "nodeType": 1,
+      "nodeName": "HTML",
+      "nodeValue": "",
+      "backendNodeId": 3,
+      "childNodeIndexes": [3, 16, 17],
+      "attributes": [{ "name": "lang", "value": "en" }],
+      "layoutNodeIndex": 1,
+      "frameId": "16E5EB33C68966D5558A668B91DB28A8"
+    },
+    { "nodeType": 1, "nodeName": "HEAD", "nodeValue": "", "backendNodeId": 5, "childNodeIndexes": [4, 5, 6, 7, 8, 9, 10, 11, 13, 14] },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n  ", "backendNodeId": 6 },
+    { "nodeType": 1, "nodeName": "META", "nodeValue": "", "backendNodeId": 7, "attributes": [{ "name": "charset", "value": "UTF-8" }] },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n  ", "backendNodeId": 8 },
+    {
+      "nodeType": 1,
+      "nodeName": "META",
+      "nodeValue": "",
+      "backendNodeId": 9,
+      "attributes": [
+        { "name": "http-equiv", "value": "X-UA-Compatible" },
+        { "name": "content", "value": "IE=edge" }
+      ]
+    },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n  ", "backendNodeId": 10 },
+    {
+      "nodeType": 1,
+      "nodeName": "META",
+      "nodeValue": "",
+      "backendNodeId": 11,
+      "attributes": [
+        { "name": "name", "value": "viewport" },
+        { "name": "content", "value": "width=device-width, initial-scale=1.0" }
+      ]
+    },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n  ", "backendNodeId": 12 },
+    { "nodeType": 1, "nodeName": "TITLE", "nodeValue": "", "backendNodeId": 13, "childNodeIndexes": [12] },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "Document", "backendNodeId": 14 },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n", "backendNodeId": 15 },
+    {
+      "nodeType": 1,
+      "nodeName": "SCRIPT",
+      "nodeValue": "",
+      "backendNodeId": 16,
+      "childNodeIndexes": [15],
+      "attributes": [
+        { "name": "src", "value": "./init.js" },
+        { "name": "defer", "value": "" }
+      ]
+    },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n\n", "backendNodeId": 17 },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n\n\n", "backendNodeId": 18 },
+    { "nodeType": 1, "nodeName": "BODY", "nodeValue": "", "backendNodeId": 19, "childNodeIndexes": [18, 19, 33], "layoutNodeIndex": 2 },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n  ", "backendNodeId": 20 },
+    {
+      "nodeType": 1,
+      "nodeName": "DIV",
+      "nodeValue": "",
+      "backendNodeId": 21,
+      "childNodeIndexes": [20, 21, 25, 26, 27, 28, 32],
+      "attributes": [{ "name": "id", "value": "main" }],
+      "layoutNodeIndex": 3
+    },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n    ", "backendNodeId": 22 },
+    {
+      "nodeType": 1,
+      "nodeName": "POPUP-INFO",
+      "nodeValue": "",
+      "backendNodeId": 23,
+      "childNodeIndexes": [22],
+      "attributes": [
+        { "name": "img", "value": "img/alt.png" },
+        { "name": "text", "value": "component-1" }
+      ],
+      "layoutNodeIndex": 4
+    },
+    {
+      "nodeType": 1,
+      "nodeName": "SPAN",
+      "nodeValue": "",
+      "backendNodeId": 24,
+      "childNodeIndexes": [23],
+      "attributes": [{ "name": "class", "value": "wrapper" }],
+      "layoutNodeIndex": 5,
+      "shadowRootType": "closed"
+    },
+    {
+      "nodeType": 1,
+      "nodeName": "SPAN",
+      "nodeValue": "",
+      "backendNodeId": 25,
+      "childNodeIndexes": [24],
+      "attributes": [{ "name": "class", "value": "info" }],
+      "layoutNodeIndex": 6,
+      "shadowRootType": "closed"
+    },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "component-1result", "backendNodeId": 26, "layoutNodeIndex": 7, "shadowRootType": "closed" },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n    ", "backendNodeId": 27, "layoutNodeIndex": 8 },
+    { "nodeType": 1, "nodeName": "BR", "nodeValue": "", "backendNodeId": 28, "layoutNodeIndex": 9 },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n    ", "backendNodeId": 29 },
+    {
+      "nodeType": 1,
+      "nodeName": "POPUP-INFO-OPEN",
+      "nodeValue": "",
+      "backendNodeId": 30,
+      "childNodeIndexes": [29],
+      "attributes": [
+        { "name": "img", "value": "img/alt.png" },
+        { "name": "text", "value": "component-open" }
+      ],
+      "layoutNodeIndex": 10
+    },
+    {
+      "nodeType": 1,
+      "nodeName": "SPAN",
+      "nodeValue": "",
+      "backendNodeId": 31,
+      "childNodeIndexes": [30],
+      "attributes": [{ "name": "class", "value": "wrapper" }],
+      "layoutNodeIndex": 11,
+      "shadowRootType": "open"
+    },
+    {
+      "nodeType": 1,
+      "nodeName": "SPAN",
+      "nodeValue": "",
+      "backendNodeId": 32,
+      "childNodeIndexes": [31],
+      "attributes": [{ "name": "class", "value": "info" }],
+      "layoutNodeIndex": 12,
+      "shadowRootType": "open"
+    },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "component-openresult", "backendNodeId": 33, "layoutNodeIndex": 13, "shadowRootType": "open" },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n\n  ", "backendNodeId": 34, "layoutNodeIndex": 14 },
+    { "nodeType": 3, "nodeName": "#text", "nodeValue": "\n\n\n\n", "backendNodeId": 35 }
+  ],
+  "layoutTreeNodes": [
+    { "domNodeIndex": 0, "boundingBox": { "x": 0, "y": 0, "width": 800, "height": 600 }, "isStackingContext": true },
+    { "domNodeIndex": 2, "boundingBox": { "x": 0, "y": 0, "width": 800, "height": 52 }, "isStackingContext": true },
+    { "domNodeIndex": 17, "boundingBox": { "x": 8, "y": 8, "width": 784, "height": 36 } },
+    { "domNodeIndex": 19, "boundingBox": { "x": 8, "y": 8, "width": 784, "height": 36 } },
+    { "domNodeIndex": 21, "boundingBox": { "x": 8, "y": 8, "width": 119.96875, "height": 17 } },
+    { "domNodeIndex": 22, "boundingBox": { "x": 8, "y": 8, "width": 119.96875, "height": 17 } },
+    { "domNodeIndex": 23, "boundingBox": { "x": 8, "y": 8, "width": 119.96875, "height": 17 } },
+    {
+      "domNodeIndex": 24,
+      "boundingBox": { "x": 8, "y": 8, "width": 119.96875, "height": 17 },
+      "layoutText": "component-1result",
+      "inlineTextNodes": [{ "boundingBox": { "x": 8, "y": 8, "width": 119.96875, "height": 17 }, "startCharacterIndex": 0, "numCharacters": 17 }]
+    },
+    { "domNodeIndex": 25, "boundingBox": { "x": 0, "y": 0, "width": 0, "height": 0 }, "layoutText": "\n    " },
+    {
+      "domNodeIndex": 26,
+      "boundingBox": { "x": 127.96875, "y": 8, "width": 0, "height": 17 },
+      "layoutText": "\n",
+      "inlineTextNodes": [{ "boundingBox": { "x": 127.96875, "y": 8, "width": 0, "height": 17 }, "startCharacterIndex": 0, "numCharacters": 1 }]
+    },
+    { "domNodeIndex": 28, "boundingBox": { "x": 8, "y": 26, "width": 143.078125, "height": 17 } },
+    { "domNodeIndex": 29, "boundingBox": { "x": 8, "y": 26, "width": 143.078125, "height": 17 } },
+    { "domNodeIndex": 30, "boundingBox": { "x": 8, "y": 26, "width": 143.078125, "height": 17 } },
+    {
+      "domNodeIndex": 31,
+      "boundingBox": { "x": 8, "y": 26, "width": 143.078125, "height": 17 },
+      "layoutText": "component-openresult",
+      "inlineTextNodes": [{ "boundingBox": { "x": 8, "y": 26, "width": 143.078125, "height": 17 }, "startCharacterIndex": 0, "numCharacters": 20 }]
+    },
+    { "domNodeIndex": 32, "boundingBox": { "x": 0, "y": 0, "width": 0, "height": 0 }, "layoutText": "\n\n  " }
+  ],
+  "computedStyles": []
+}

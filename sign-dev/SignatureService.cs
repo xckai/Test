@@ -145,6 +145,19 @@ namespace SignatureService
 
             return new OkObjectResult(res); ;
         }
+        [FunctionName("GetAuthorizedUserInfo")]
+        public static async Task<IActionResult> GetAuthorizedUserInfo(
+           [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+           ILogger log)
+        {
+            var allowedEmails = GetEnvironmentVariable("SignatureAllowedUserEmails") ?? "";
+            var allowedPhones = GetEnvironmentVariable("SignatureAllowedUserPhones") ?? "";
+            return new OkObjectResult(new
+            {
+                AuthorizedUserEmails = allowedEmails,
+                AuthorizedUsePhones = allowedPhones
+            }); ;
+        }
         private static User ValidCurrentId4User(HttpRequest req)
         {
             var user = new User();
