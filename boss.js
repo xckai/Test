@@ -42,3 +42,15 @@ function getChatListInfos() {
     })
     .reverse();
 }
+
+function encoo_GetAllDetail() {
+  var zhuxiang = [];
+  var ItemKindMain = _context$.jQuery('#ItemKindMain>tbody>tr');
+  ItemKindMain.each(function (idx, item) {
+    zhuxiang.push({
+      GuItemKindKindName: item.value,
+      GuItemKindSumInsuredInsurance: item.value
+    });
+  });
+  return zhuxiang;
+}

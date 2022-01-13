@@ -32,7 +32,57 @@ module.exports = {
         test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  useBuiltIns: 'entry',
+                  corejs: {
+                    version: '3',
+                    proposals: true
+                  }
+                }
+              ],
+              '@babel/preset-react',
+              '@babel/preset-typescript'
+            ],
+            plugins: [
+              [
+                '@babel/plugin-proposal-decorators',
+                {
+                  legacy: true
+                }
+              ],
+              [
+                '@babel/plugin-proposal-private-property-in-object',
+                {
+                  loose: true
+                }
+              ],
+              [
+                '@babel/plugin-proposal-private-methods',
+                {
+                  loose: true
+                }
+              ],
+              [
+                '@babel/plugin-proposal-class-properties',
+                {
+                  loose: true
+                }
+              ],
+              [
+                'import',
+                {
+                  libraryName: 'antd',
+                  libraryDirectory: 'es',
+                  style: true
+                }
+              ]
+            ]
+          }
         }
       },
       {
