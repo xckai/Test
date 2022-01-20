@@ -1,18 +1,51 @@
 const { resolve, join } = require('path');
 const path = require('path');
+const { spawn, execSync } = require('child_process');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const dev = process.env.DEV === '1';
+
+process.env.NODE_ENV = dev ? 'development' : 'production';
+let electronProcess;
 
 module.exports = {
   target: 'electron-main',
   mode: dev ? 'development' : 'production',
   watch: dev,
+  watchOptions: {
+    ignored: ['**/src/views/**/*.tsx', '**/node_modules']
+  },
   devtool: dev ? 'eval-source-map' : false,
   entry: {
-    main: './src/browser/main.ts'
+    entry: './src/entry.ts'
   },
-  plugins: [new ForkTsCheckerWebpackPlugin()],
+  plugins: [
+    new ForkTsCheckerWebpackPlugin(),
+    {
+      apply: (compiler) => {
+        compiler.hooks.afterEmit.tap('AfterEmitPlugin', (file) => {
+          if (electronProcess) {
+            try {
+              if (process.platform === 'win32') {
+                execSync(`taskkill /pid ${electronProcess.pid} /f /t`);
+              } else {
+                electronProcess.kill();
+              }
+
+              electronProcess = null;
+            } catch (e) {}
+          }
+
+          electronProcess = spawn('npm', ['run start-electron'], {
+            shell: true,
+            env: process.env,
+            stdio: 'inherit'
+          });
+        });
+      }
+    }
+  ],
   module: {
     rules: [
       {
@@ -25,6 +58,9 @@ module.exports = {
               [
                 '@babel/preset-env',
                 {
+                  targets: {
+                    node: 'current'
+                  },
                   useBuiltIns: 'entry',
                   corejs: {
                     version: '3',
@@ -71,7 +107,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, '../../dist/browser')
+    path: path.resolve(__dirname, '../../dist')
   },
   resolve: {
     modules: ['node_modules'],

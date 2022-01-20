@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "electron": "^16.0.6"
+  },
+  "dependencies": {
+    "electron-tabs": "^0.15.0"
   }
 }

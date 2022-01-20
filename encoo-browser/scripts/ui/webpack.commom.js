@@ -2,14 +2,15 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { getThemeVariables } = require('antd/dist/theme');
 
 var fs = require('fs');
-const files = fs.readdirSync(path.resolve(__dirname, '../../src/ui/Pages')).map((file) => file.split('.')[0]);
+const files = fs.readdirSync(path.resolve(__dirname, '../../src/views/pages')).map((file) => file.split('.')[0]);
 const entries = {};
 files.forEach((fileName) => {
-  entries[fileName] = `./src/ui/Pages/${fileName}.tsx`;
+  entries[fileName] = `./src/views/pages/${fileName}.tsx`;
 });
-const htmls = files.map((fileName) => new HtmlWebpackPlugin({ template: `src/ui/index.html`, filename: `${fileName}.html`, chunks: [fileName] }));
+const htmls = files.map((fileName) => new HtmlWebpackPlugin({ template: `src/index.html`, filename: `${fileName}.html`, chunks: [fileName] }));
 module.exports = {
   mode: 'production',
   entry: entries,
@@ -101,7 +102,11 @@ module.exports = {
             loader: 'less-loader',
             options: {
               lessOptions: {
-                javascriptEnabled: true
+                javascriptEnabled: true,
+                modifyVars: getThemeVariables({
+                  dark: true, // 开启暗黑模式
+                  compact: true // 开启紧凑模式
+                })
                 // modifyVars: {
                 //   'primary-color': 'red'
                 // }
