@@ -1,9 +1,13 @@
-import React, { PureComponent, version } from 'react';
+import React, { PureComponent, useCallback, version } from 'react';
 import styled, { css } from 'styled-components';
 import { CloseOutlined } from '@ant-design/icons';
 
 import { Button, Tabs } from 'antd';
-import ButtonGroup from 'antd/lib/button/button-group';
+
+import { useAppSelector, useAppDispatch } from '../store/store';
+import { parseInt } from 'lodash';
+import { windowStoreManger } from '../store/window-store';
+
 const { TabPane } = Tabs;
 
 const Bar = styled.section`
@@ -66,12 +70,25 @@ const DragDiv = styled.div`
   -webkit-app-region: drag;
 `;
 export function TabBar(props: {}) {
+  const activeTabId = useAppSelector((s) => s.window.activeTabId);
+  const tabs = useAppSelector((s) => s.window.tabs);
+  const dispatch = useAppDispatch();
+  const onEdit = useCallback((targetKey, action) => {
+    if (action == 'add') {
+      dispatch(windowStoreManger.actions.addTab({ winId: 1, url: 'https://www.baidu.com' }));
+    } else {
+      dispatch(windowStoreManger.actions.removeTab({ tabId: parseInt(targetKey), winId: 1 }));
+    }
+  }, []);
+  const onChange = useCallback((activeKey) => {
+    dispatch(windowStoreManger.actions.activeTab({ tabId: parseInt(activeKey), winId: 1 }));
+  }, []);
   return (
     <Bar>
-      <TabGroup defaultActiveKey="1" type="editable-card">
-        <TabPane tab="Tab 1" key="1"></TabPane>
-        <TabPane tab="Tab 2" key="2"></TabPane>
-        <TabPane tab="Tab 3" key="3"></TabPane>
+      <TabGroup activeKey={activeTabId.toString()} type="editable-card" onEdit={onEdit} onChange={onChange}>
+        {tabs.map((tab) => (
+          <TabPane tab={tab.url} key={tab.id.toString()} />
+        ))}
       </TabGroup>
       <DragDiv />
       <OptionsButton />

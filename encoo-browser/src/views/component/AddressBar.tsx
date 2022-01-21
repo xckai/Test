@@ -1,8 +1,9 @@
-import React, { PureComponent, version } from 'react';
+import React, { PureComponent, useEffect, useState, version } from 'react';
+import { useAppSelector, useAppDispatch } from '../store/store';
 
-import { SettingOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import styled from 'styled-components';
+import { windowStoreManger } from '../store/window-store';
 const AddressBarDiv = styled.div`
   display: flex;
   padding: 2px 8px 4px 8px;
@@ -20,9 +21,27 @@ const AddressBarDiv = styled.div`
   }
 `;
 export function AddressBar() {
+  const url = useAppSelector((store) => store.window.addressBarUrl);
+  const activeTabId = useAppSelector((s) => s.window.activeTabId);
+  const dispatch = useAppDispatch();
+
+  const [tempVal, setTempVal] = useState('');
+  useEffect(() => {
+    setTempVal(url);
+  }, [url, activeTabId]);
   return (
     <AddressBarDiv>
-      <Input defaultValue="" />
+      <Input
+        value={tempVal}
+        onChange={(e) => {
+          setTempVal(e.target.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            dispatch(windowStoreManger.actions.changeCurrentUrl({ url: tempVal }));
+          }
+        }}
+      />
     </AddressBarDiv>
   );
 }
