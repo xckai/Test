@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, PreloadedState } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import { ipcRenderer } from 'electron';
+import { managerCenter } from './manager-center';
 export interface Tab {
   id: number;
   winId: number;
@@ -17,7 +18,6 @@ export const windowStoreManger = createSlice({
   initialState: {
     winId: 1,
     addressBarUrl: '',
-    tabIdCursor: 0,
     activeTabId: 0,
     tabs: [] as Array<Tab>
   },
@@ -37,11 +37,11 @@ export const windowStoreManger = createSlice({
       return s;
     },
     addTab: (state, action: PayloadAction<{ url: string; winId: number }>) => {
-      state.tabIdCursor = state.tabIdCursor + 1;
-      state.tabs = [...state.tabs, { id: state.tabIdCursor, url: action.payload.url, winId: action.payload.winId }];
-      state.activeTabId = state.tabIdCursor;
+      const tabId = managerCenter.send('create-tab', { winId: action.payload.winId, url: action.payload.url });
+      console.log(tabId);
+      state.tabs = [...state.tabs, { id: tabId, url: action.payload.url, winId: action.payload.winId }];
+      state.activeTabId = tabId;
       state.addressBarUrl = action.payload.url;
-      ipcRenderer.emit('add-tab', { winId: action.payload.winId, url: action.payload.url, tabId: state.activeTabId });
       return state;
     },
     activeTab: (state, action: PayloadAction<{ tabId: number; winId: number }>) => {
@@ -61,6 +61,7 @@ export const windowStoreManger = createSlice({
           //窗体关闭
         } else {
           s.activeTabId = t.id;
+          s.addressBarUrl = t.url;
         }
       }
       return s;

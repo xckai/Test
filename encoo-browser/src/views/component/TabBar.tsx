@@ -4,7 +4,7 @@ import { CloseOutlined } from '@ant-design/icons';
 
 import { Button, Tabs } from 'antd';
 
-import { useAppSelector, useAppDispatch } from '../store/store';
+import { useAppSelector, useAppDispatch } from '../store/main-window-page-store';
 import { parseInt } from 'lodash';
 import { windowStoreManger } from '../store/window-store';
 

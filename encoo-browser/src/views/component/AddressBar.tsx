@@ -1,5 +1,5 @@
 import React, { PureComponent, useEffect, useState, version } from 'react';
-import { useAppSelector, useAppDispatch } from '../store/store';
+import { useAppSelector, useAppDispatch } from '../store/main-window-page-store';
 
 import { Input } from 'antd';
 import styled from 'styled-components';

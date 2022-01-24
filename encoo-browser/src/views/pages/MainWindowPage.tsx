@@ -2,7 +2,7 @@ import React, { PureComponent, version } from 'react';
 import { Layout, Button, message, Space, Table, Tag, Input, Rate, DatePicker } from 'antd';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { store } from '../store/store';
+import { MainWindowStore } from '../store/main-window-page-store';
 import { TabBar } from '../component/TabBar';
 import { AddressBar } from '../component/AddressBar';
 import styled from 'styled-components';
@@ -21,7 +21,7 @@ const StyledMainWindow = styled(MainWindow)`
   background-color: #141414;
 `;
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={MainWindowStore}>
     <StyledMainWindow />
   </Provider>,
   document.getElementById('app')

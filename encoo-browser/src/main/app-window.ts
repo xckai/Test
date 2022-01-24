@@ -1,7 +1,9 @@
 import { BrowserView, BrowserWindow } from 'electron';
+import { TabManager } from './tab-view-manager';
 
 export class AppWindow {
   public browserWinRef: BrowserWindow;
+  public TabManager: TabManager;
   public constructor() {
     this.browserWinRef = new BrowserWindow({
       frame: false,
@@ -18,10 +20,14 @@ export class AppWindow {
       show: false
     });
   }
+  public send(channel: string, ...args: any[]) {
+    this.webContents.send(channel, ...args);
+  }
   public show() {
+    this.TabManager = new TabManager(this);
     if (process.env.NODE_ENV === 'development') {
       this.webContents.openDevTools({ mode: 'detach' });
-      this.browserWinRef.loadURL('http://localhost:9000/MainBrowserLayout.html');
+      this.browserWinRef.loadURL('http://localhost:9000/MainWindowPage.html');
     } else {
       this.browserWinRef.loadURL('./dist/app.html');
     }
