@@ -4,9 +4,9 @@ import { CloseOutlined } from '@ant-design/icons';
 
 import { Button, Tabs } from 'antd';
 
-import { useAppSelector, useAppDispatch } from '../store/main-window-page-store';
+import { useAppSelector, useAppDispatch } from '../store/main-store';
 import { parseInt } from 'lodash';
-import { windowStoreManger } from '../store/window-store';
+import { WindowStoreActions } from '../store/window-store';
 
 const { TabPane } = Tabs;
 
@@ -40,8 +40,8 @@ const Bar = styled.section`
 const TabGroup = styled(Tabs)`
   .ant-tabs-nav {
     height: 30px;
-    margin-bottom: 0;
-    margin-top: 10px;
+    margin-bottom: 0 !important;
+    margin-top: 10px !important;
     box-sizing: border-box;
   }
   .ant-tabs-tab {
@@ -65,7 +65,7 @@ export function OptionsButton() {
 }
 const DragDiv = styled.div`
   border-bottom: 1px solid #303030;
-  padding-left: 48px;
+  padding-left: 80px;
   flex: 1;
   -webkit-app-region: drag;
 `;
@@ -75,19 +75,33 @@ export function TabBar(props: {}) {
   const dispatch = useAppDispatch();
   const onEdit = useCallback((targetKey, action) => {
     if (action == 'add') {
-      dispatch(windowStoreManger.actions.addTab({ winId: 1, url: 'https://www.baidu.com' }));
+      dispatch(WindowStoreActions.addTabAsync({ winId: 1, url: 'https://www.baidu.com' }));
     } else {
-      dispatch(windowStoreManger.actions.removeTab({ tabId: parseInt(targetKey), winId: 1 }));
+      dispatch(WindowStoreActions.removeTab({ tabId: parseInt(targetKey), winId: 1 }));
     }
   }, []);
   const onChange = useCallback((activeKey) => {
-    dispatch(windowStoreManger.actions.activeTab({ tabId: parseInt(activeKey), winId: 1 }));
+    dispatch(WindowStoreActions.activeTab({ tabId: parseInt(activeKey), winId: 1 }));
   }, []);
   return (
     <Bar>
       <TabGroup activeKey={activeTabId.toString()} type="editable-card" onEdit={onEdit} onChange={onChange}>
         {tabs.map((tab) => (
-          <TabPane tab={tab.url} key={tab.id.toString()} />
+          <TabPane
+            tab={
+              <span
+                onAuxClick={(e) => {
+                  console.log(e);
+                  e.stopPropagation();
+                  e.preventDefault();
+                  dispatch(WindowStoreActions.removeTab({ tabId: tab.id, winId: 1 }));
+                }}
+              >
+                {tab.title}
+              </span>
+            }
+            key={tab.id.toString()}
+          />
         ))}
       </TabGroup>
       <DragDiv />

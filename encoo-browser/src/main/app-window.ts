@@ -1,5 +1,5 @@
 import { BrowserView, BrowserWindow } from 'electron';
-import { TabManager } from './tab-view-manager';
+import { TabManager } from './tab-manager';
 
 export class AppWindow {
   public browserWinRef: BrowserWindow;

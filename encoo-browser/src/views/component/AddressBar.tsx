@@ -1,9 +1,10 @@
 import React, { PureComponent, useEffect, useState, version } from 'react';
-import { useAppSelector, useAppDispatch } from '../store/main-window-page-store';
+import { useAppSelector, useAppDispatch } from '../store/main-store';
 
 import { Input } from 'antd';
 import styled from 'styled-components';
 import { windowStoreManger } from '../store/window-store';
+import { prefixHttps } from '../../common/util';
 const AddressBarDiv = styled.div`
   display: flex;
   padding: 2px 8px 4px 8px;
@@ -38,7 +39,8 @@ export function AddressBar() {
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
-            dispatch(windowStoreManger.actions.changeCurrentUrl({ url: tempVal }));
+            setTempVal(prefixHttps(tempVal));
+            dispatch(windowStoreManger.actions.changeCurrentUrl({ url: prefixHttps(tempVal) }));
           }
         }}
       />

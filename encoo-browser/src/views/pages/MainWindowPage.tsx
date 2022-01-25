@@ -2,7 +2,7 @@ import React, { PureComponent, version } from 'react';
 import { Layout, Button, message, Space, Table, Tag, Input, Rate, DatePicker } from 'antd';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { MainWindowStore } from '../store/main-window-page-store';
+import { MainWindowStore } from '../store/main-store';
 import { TabBar } from '../component/TabBar';
 import { AddressBar } from '../component/AddressBar';
 import styled from 'styled-components';
