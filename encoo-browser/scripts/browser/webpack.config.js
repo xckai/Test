@@ -25,6 +25,9 @@ module.exports = {
     {
       apply: (compiler) => {
         compiler.hooks.afterEmit.tap('AfterEmitPlugin', (file) => {
+          if (!dev) {
+            return;
+          }
           if (electronProcess) {
             try {
               if (process.platform === 'win32') {

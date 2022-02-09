@@ -1,41 +1,19 @@
 import React, { PureComponent, useCallback, version } from 'react';
 import styled, { css } from 'styled-components';
-import { CloseOutlined } from '@ant-design/icons';
+import { BorderOutlined, CloseOutlined, LineOutlined } from '@ant-design/icons';
 
 import { Button, Tabs } from 'antd';
 
 import { useAppSelector, useAppDispatch } from '../store/main-store';
 import { parseInt } from 'lodash';
-import { WindowStoreActions } from '../store/window-store';
+import { WindowStoreActions } from '../store/store-slices';
+import { WindowControlButtons } from './WindowControls';
 
 const { TabPane } = Tabs;
 
 const Bar = styled.section`
   display: flex;
   box-sizing: border-box;
-
-  .btn-group {
-    position: absolute;
-    right: 0;
-    top: 0px;
-    -webkit-app-region: no-drag;
-    > button:last-child {
-      :hover {
-        background: #a50101;
-        svg {
-          fill: #eee;
-        }
-      }
-    }
-    button {
-      width: 48px;
-      height: 39px;
-      border: none;
-      svg {
-        fill: #8b8181;
-      }
-    }
-  }
 `;
 const TabGroup = styled(Tabs)`
   .ant-tabs-nav {
@@ -46,6 +24,11 @@ const TabGroup = styled(Tabs)`
   }
   .ant-tabs-tab {
     color: gray;
+    .ant-tabs-tab-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
   .ant-tabs-tab-active {
     border-bottom: 1px solid rgb(67 67 67) !important;
@@ -55,17 +38,18 @@ const TabGroup = styled(Tabs)`
     background: #434343 !important;
   }
 `;
-const CloseButton = styled(Button)``;
-export function OptionsButton() {
-  return (
-    <Button.Group className="btn-group">
-      <CloseButton icon={<CloseOutlined />}></CloseButton>
-    </Button.Group>
-  );
-}
+const StyledTitle = styled.span`
+  padding: 0px;
+  margin: 0px;
+  max-width: 8rem;
+  min-width: 7rem;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+`;
 const DragDiv = styled.div`
   border-bottom: 1px solid #303030;
-  padding-left: 80px;
+  padding-left: 154px;
   flex: 1;
   -webkit-app-region: drag;
 `;
@@ -89,23 +73,22 @@ export function TabBar(props: {}) {
         {tabs.map((tab) => (
           <TabPane
             tab={
-              <span
+              <StyledTitle
                 onAuxClick={(e) => {
-                  console.log(e);
                   e.stopPropagation();
                   e.preventDefault();
                   dispatch(WindowStoreActions.removeTab({ tabId: tab.id, winId: 1 }));
                 }}
               >
                 {tab.title}
-              </span>
+              </StyledTitle>
             }
             key={tab.id.toString()}
           />
         ))}
       </TabGroup>
       <DragDiv />
-      <OptionsButton />
+      <WindowControlButtons />
     </Bar>
   );
 }

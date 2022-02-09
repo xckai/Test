@@ -26,3 +26,10 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app')
 );
+window.addEventListener(
+  'keydown',
+  (ev: KeyboardEvent) => {
+    console.log(ev.key);
+  },
+  true
+);

@@ -1,5 +1,8 @@
 import { app, ipcMain, Menu } from 'electron';
 import { AppWindow } from './app-window';
+//app.commandLine.appendSwitch('disable-gpu');
+app.disableHardwareAcceleration();
+//app.commandLine.appendSwitch('disable-software-rasterizer');
 
 export class ApplicationBuilder {
   public static build() {

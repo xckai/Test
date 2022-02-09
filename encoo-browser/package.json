@@ -8,14 +8,18 @@
     "browser-dev": "cross-env Dev=1 webpack --config ./scripts/browser/webpack.config.js",
     "ui-dev": "cross-env Dev=1 BROWSERSLIST_ENV=dev webpack serve --config ./scripts/ui/webpack.dev.js",
     "start-electron": "electron .",
-    "build": "cross-env Dev=1 BROWSERSLIST_ENV=production webpack --config ./scripts/ui/webpack.prod.js",
-    "start": "concurrently  'npm:ui-dev' 'npm:browser-dev'"
+    "build-ui": "cross-env  BROWSERSLIST_ENV=production webpack --config ./scripts/ui/webpack.prod.js",
+    "build-browser": "cross-env webpack --config ./scripts/browser/webpack.config.js",
+    "build": "concurrently  'npm:build-ui' 'npm:build-browser'",
+    "start": "concurrently  'npm:ui-dev' 'npm:browser-dev'",
+    "package": "electron-builder --win --x64 --publish never",
+    "package:linux": "electron-builder --linux --publish never"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xckai/net_topo.git"
   },
-  "author": "",
+  "author": "Kai Xu <xckai123@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/xckai/net_topo/issues"
@@ -33,6 +37,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
     "@types/axios": "^0.14.0",
     "@types/chrome": "^0.0.176",
+    "@types/electron-localshortcut": "^3.1.0",
     "@types/lodash": "^4.14.172",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
@@ -42,9 +47,11 @@
     "babel-loader": "^8.2.2",
     "babel-plugin-import": "^1.13.3",
     "browserlist": "^1.0.1",
+    "clean-webpack-plugin": "^4.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.2",
     "electron": "^16.0.7",
+    "electron-builder": "^22.14.5",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^6.2.1",
     "html-webpack-plugin": "^5.3.1",
@@ -65,6 +72,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@reduxjs/toolkit": "^1.7.1",
+    "@types/redux-logger": "^3.0.9",
     "antd": "^4.15.4",
     "axios": "^0.21.1",
     "concurrently": "^7.0.0",
@@ -74,18 +82,39 @@
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.2.0",
+    "redux-logger": "^3.0.6",
     "styled-components": "^5.3.3"
   },
   "browserslist": {
     "production": [
-      "last 1 version",
-      "> 1%",
-      "ie 11"
+      "last 1 chrome version"
     ],
     "dev": [
       "last 1 chrome version",
-      "last 1 firefox version",
       "last 1 edge version"
     ]
+  },
+  "build": {
+    "appId": "encoo.browser",
+    "files": [
+      "dist/entry.js",
+      "dist/ui/**/*",
+      "package.json"
+    ],
+    "electronDownload": {
+      "version": "16.0.8",
+      "customDir": "v16.0.8"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb"
+      ]
+    }
   }
 }

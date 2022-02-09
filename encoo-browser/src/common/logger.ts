@@ -58,7 +58,7 @@ export interface ILoggerOpts extends Object {
   formatter?: ILogHandler;
 }
 
-const Logger: Partial<GlobalLogger> = {};
+const logger: Partial<GlobalLogger> = {};
 
 (function(global) {
   let logHandler: ILogHandler;
@@ -85,13 +85,13 @@ const Logger: Partial<GlobalLogger> = {};
   const defineLogLevel = function(value, name) {
     return { value, name };
   };
-  Logger.TRACE = defineLogLevel(1, 'TRACE');
-  Logger.DEBUG = defineLogLevel(2, 'DEBUG');
-  Logger.INFO = defineLogLevel(3, 'INFO');
-  Logger.TIME = defineLogLevel(4, 'TIME');
-  Logger.WARN = defineLogLevel(5, 'WARN');
-  Logger.ERROR = defineLogLevel(8, 'ERROR');
-  Logger.OFF = defineLogLevel(99, 'OFF');
+  logger.TRACE = defineLogLevel(1, 'TRACE');
+  logger.DEBUG = defineLogLevel(2, 'DEBUG');
+  logger.INFO = defineLogLevel(3, 'INFO');
+  logger.TIME = defineLogLevel(4, 'TIME');
+  logger.WARN = defineLogLevel(5, 'WARN');
+  logger.ERROR = defineLogLevel(8, 'ERROR');
+  logger.OFF = defineLogLevel(99, 'OFF');
 
   class ContextualLogger {
     context: any;
@@ -120,34 +120,34 @@ const Logger: Partial<GlobalLogger> = {};
     }
 
     trace() {
-      this.invoke(Logger.TRACE, arguments);
+      this.invoke(logger.TRACE, arguments);
     }
 
     debug() {
-      this.invoke(Logger.DEBUG, arguments);
+      this.invoke(logger.DEBUG, arguments);
     }
 
     info() {
-      this.invoke(Logger.INFO, arguments);
+      this.invoke(logger.INFO, arguments);
     }
 
     warn() {
-      this.invoke(Logger.WARN, arguments);
+      this.invoke(logger.WARN, arguments);
     }
 
     error() {
-      this.invoke(Logger.ERROR, arguments);
+      this.invoke(logger.ERROR, arguments);
     }
 
     time(label) {
       if (typeof label === 'string' && label.length > 0) {
-        this.invoke(Logger.TIME, [label, 'start']);
+        this.invoke(logger.TIME, [label, 'start']);
       }
     }
 
     timeEnd(label) {
       if (typeof label === 'string' && label.length > 0) {
-        this.invoke(Logger.TIME, [label, 'end']);
+        this.invoke(logger.TIME, [label, 'end']);
       }
     }
 
@@ -157,9 +157,9 @@ const Logger: Partial<GlobalLogger> = {};
       }
     }
   }
-  const globalLogger = new ContextualLogger({ filterLevel: Logger.OFF });
+  const globalLogger = new ContextualLogger({ filterLevel: logger.OFF });
   (function() {
-    const L = Logger;
+    const L = logger;
 
     L.enabledFor = bind(globalLogger, globalLogger.enabledFor);
     L.trace = bind(globalLogger, globalLogger.trace);
@@ -172,11 +172,11 @@ const Logger: Partial<GlobalLogger> = {};
     L.log = L.info;
   })();
 
-  Logger.setHandler = function(func) {
+  logger.setHandler = function(func) {
     logHandler = func;
   };
 
-  Logger.setLevel = function(level) {
+  logger.setLevel = function(level) {
     globalLogger.setLevel(level);
     for (const key in contextualLoggersByNameMap) {
       if (contextualLoggersByNameMap.hasOwnProperty(key)) {
@@ -185,15 +185,15 @@ const Logger: Partial<GlobalLogger> = {};
     }
   };
 
-  Logger.getLevel = function() {
+  logger.getLevel = function() {
     return globalLogger.getLevel();
   };
 
-  Logger.get = function(name) {
+  logger.get = function(name) {
     return contextualLoggersByNameMap[name] || (contextualLoggersByNameMap[name] = new ContextualLogger(merge({ name }, globalLogger.context)));
   };
 
-  Logger.createDefaultHandler = function(options: any) {
+  logger.createDefaultHandler = function(options: any) {
     options = options || {};
 
     options.formatter =
@@ -221,10 +221,10 @@ const Logger: Partial<GlobalLogger> = {};
     return function(messages, context) {
       messages = Array.prototype.slice.call(messages);
 
-      let hdlr = window.console && console.log;
+      let hdlr = global.console && console.log;
       let timerLabel;
 
-      if (context.level === Logger.TIME) {
+      if (context.level === logger.TIME) {
         timerLabel = (context.name ? `[${context.name}] ` : '') + messages[0];
 
         if (messages[1] === 'start') {
@@ -239,15 +239,15 @@ const Logger: Partial<GlobalLogger> = {};
           invokeConsoleMethod(hdlr, [`${timerLabel}: ${new Date().getTime() - timerStartTimeByLabelMap[timerLabel]}ms`]);
         }
       } else {
-        if (context.level === Logger.WARN && window.console && console.warn) {
+        if (context.level === logger.WARN && global.console && console.warn) {
           hdlr = console.warn;
-        } else if (context.level === Logger.ERROR && window.console && console.error) {
+        } else if (context.level === logger.ERROR && global.console && console.error) {
           hdlr = console.error;
-        } else if (context.level === Logger.INFO && window.console && console.info) {
+        } else if (context.level === logger.INFO && global.console && console.info) {
           hdlr = console.info;
-        } else if (context.level === Logger.DEBUG && window.console && console.debug) {
+        } else if (context.level === logger.DEBUG && global.console && console.debug) {
           hdlr = console.debug;
-        } else if (context.level === Logger.TRACE && window.console && console.log) {
+        } else if (context.level === logger.TRACE && global.console && console.log) {
           hdlr = console.log;
         }
         options.formatter(messages, context);
@@ -255,16 +255,17 @@ const Logger: Partial<GlobalLogger> = {};
       }
     };
   };
-  Logger.useDefaults = function(options) {
-    (<any>Logger).setLevel((options && options.defaultLevel) || Logger.INFO);
-    (<any>Logger).setHandler((<any>Logger).createDefaultHandler(options));
+  logger.useDefaults = function(options) {
+    (<any>logger).setLevel((options && options.defaultLevel) || logger.INFO);
+    (<any>logger).setHandler((<any>logger).createDefaultHandler(options));
   };
   const options = {
-    defaultLevel: Logger.INFO,
+    defaultLevel: logger.INFO,
     formatter(messages, context) {
       messages.unshift(`[BotTimeLogger-${context.level.name}]`);
     }
   };
-  (<any>Logger).setLevel((options && options.defaultLevel) || Logger.INFO);
-})(window);
-export default Logger;
+  (<any>logger).setLevel((options && options.defaultLevel) || logger.INFO);
+})(global || window);
+logger.useDefaults();
+export default logger;

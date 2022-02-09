@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import logger from 'redux-logger';
-import windowStore, { windowStoreManger } from './window-store';
+import windowStore, { windowStoreManger } from './store-slices';
 
 export const MainWindowStore = configureStore({
   reducer: {

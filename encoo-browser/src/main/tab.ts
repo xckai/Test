@@ -1,5 +1,6 @@
 import { app, BrowserView, ipcMain } from 'electron';
 import { ITabEvents, ITabTitleChange } from '../common/event';
+import logger from '../common/logger';
 import { AppWindow } from './app-window';
 
 export class Tab {
@@ -29,6 +30,27 @@ export class Tab {
     this.appWindow.browserWinRef.addBrowserView(this.browserViewRef);
     this.webContents.addListener('page-title-updated', (e, title) => {
       this.emit({ key: 'title-change', tabId: this.id, winId: 1, title: title });
+    });
+    this.webContents.addListener('did-start-loading', () => {
+      this.appWindow.TabManager.updateNavigationState();
+    });
+    this.webContents.addListener('new-window', (e, url, frameName, disposition) => {
+      logger.info('new-window', url, disposition, frameName);
+      if (disposition === 'new-window') {
+        if (frameName === '_self') {
+          e.preventDefault();
+          this.appWindow.TabManager.createTab({ url, active: true }, true);
+        } else if (frameName === '_blank') {
+          e.preventDefault();
+          this.appWindow.TabManager.createTab({ url, active: true }, true);
+        }
+      } else if (disposition === 'foreground-tab') {
+        e.preventDefault();
+        this.appWindow.TabManager.createTab({ url, active: true }, true);
+      } else if (disposition === 'background-tab') {
+        e.preventDefault();
+        this.appWindow.TabManager.createTab({ url, active: true }, true);
+      }
     });
   }
   public show() {

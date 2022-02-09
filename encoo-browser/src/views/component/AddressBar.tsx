@@ -3,9 +3,10 @@ import { useAppSelector, useAppDispatch } from '../store/main-store';
 
 import { Input } from 'antd';
 import styled from 'styled-components';
-import { windowStoreManger } from '../store/window-store';
+import { windowStoreManger } from '../store/store-slices';
 import { prefixHttps } from '../../common/util';
-const AddressBarDiv = styled.div`
+import { NavicationControl } from './NavicationControls';
+const StyledDiv = styled.div`
   display: flex;
   padding: 2px 8px 4px 8px;
   border-bottom: 1px solid gray;
@@ -31,7 +32,8 @@ export function AddressBar() {
     setTempVal(url);
   }, [url, activeTabId]);
   return (
-    <AddressBarDiv>
+    <StyledDiv>
+      <NavicationControl />
       <Input
         value={tempVal}
         onChange={(e) => {
@@ -44,6 +46,6 @@ export function AddressBar() {
           }
         }}
       />
-    </AddressBarDiv>
+    </StyledDiv>
   );
 }
